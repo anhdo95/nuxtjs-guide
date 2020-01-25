@@ -1,34 +1,32 @@
 <template>
   <div>
-    A list of users
-
-    <ul>
-      <li v-for="user in users" :key="user.id" @click="loadUser(user)">
-        {{ user.name }}
-      </li>
-    </ul>
+    <PostList :posts="posts" />
   </div>
 </template>
 
 <script>
+import PostList from '@/components/PostList'
+
 export default {
-  layout: 'users',
+  components: {
+    PostList
+  },
   data() {
     return {
-      users: [
-        { id: 1, name: 'Richard Do' },
-        { id: 2, name: 'John Doe' },
-      ]
-    }
-  },
-  methods: {
-    loadUser(user) {
-      this.$router.push({
-        name: 'users-id',
-        params: {
-          id: user.id
+      posts: [
+        {
+          id: 1,
+          title: "Post title 1",
+          thumbnailUrl: "https://previews.123rf.com/images/maxkabakov/maxkabakov1401/maxkabakov140101464/25153116-news-concept-pixelated-words-tech-news-on-digital-background-3d-render.jpg",
+          content: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
+        },
+        {
+          id: 2,
+          title: "Post title 2",
+          thumbnailUrl: "https://previews.123rf.com/images/maxkabakov/maxkabakov1401/maxkabakov140101464/25153116-news-concept-pixelated-words-tech-news-on-digital-background-3d-render.jpg",
+          content: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
         }
-      })
+      ]
     }
   }
 }

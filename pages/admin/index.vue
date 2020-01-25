@@ -1,9 +1,11 @@
 <template>
-  <div class="home-page">
-    <section class="intro">
-      <h1>Get the latest tech news!</h1>
+  <div class="admin-page">
+    <section>
+      <button class="create-post">Create Post</button>
     </section>
-    <PostList :posts="posts" />
+    <section>
+      <PostList :posts="posts" />
+    </section>
   </div>
 </template>
 
@@ -35,31 +37,18 @@ export default {
 }
 </script>
 
-<style>
-  .home-page {
-    position: relative;
+<style scoped>
+  .admin-page {
+    padding-top: 2rem;
     text-align: center;
-    color: #fff;
-    background-image: url('~assets/images/intro.jpg');
-    background-size: cover;
   }
 
-  .home-page::after {
-    position: absolute;
-    content: '';
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0,0,0,.3);
-  }
-
-  .home-page > * {
-    position: relative;
-    z-index: 100;
-  }
-
-  .intro h1 {
-    display: inline-block;
+  .create-post {
+    padding: 1rem 3rem;
+    background-color: #f8e2a2;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
   }
 </style>

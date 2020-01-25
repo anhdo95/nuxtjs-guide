@@ -1,7 +1,7 @@
 <template>
   <nuxt-link :to="`/posts/${post.id}`" role="article" class="featured-post">
     <figure>
-      <img :src="post.thumbnailUrl" :style="{ width: '100%' }" />
+      <img class="thumbnail" :src="post.thumbnailUrl" />
       <figcaption>
         <h3>{{ post.title }}</h3>
         <p>{{ post.content }}</p>
@@ -29,5 +29,12 @@ export default {
 
   .featured-post figcaption {
     padding: .5rem;
+    background-color: #fff;
+  }
+
+  .thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 </style>
