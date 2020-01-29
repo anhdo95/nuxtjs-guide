@@ -1,38 +1,29 @@
 <template>
   <div class="admin-page">
     <section>
-      <button class="create-post">Create Post</button>
+      <button class="create-post" @click="$router.push('/admin/new-post')">
+        Create Post
+      </button>
     </section>
     <section>
-      <PostList :posts="posts" />
+      <PostList :posts="posts" :isAdmin="true" />
     </section>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import PostList from '@/components/PostList'
 
 export default {
+  layout: 'admin',
   components: {
     PostList
   },
-  data() {
-    return {
-      posts: [
-        {
-          id: 1,
-          title: "Post title 1",
-          thumbnailUrl: "https://previews.123rf.com/images/maxkabakov/maxkabakov1401/maxkabakov140101464/25153116-news-concept-pixelated-words-tech-news-on-digital-background-3d-render.jpg",
-          content: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
-        },
-        {
-          id: 2,
-          title: "Post title 2",
-          thumbnailUrl: "https://previews.123rf.com/images/maxkabakov/maxkabakov1401/maxkabakov140101464/25153116-news-concept-pixelated-words-tech-news-on-digital-background-3d-render.jpg",
-          content: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
-        }
-      ]
-    }
+  computed: {
+    ...mapState({
+      posts: state => state.posts
+    })
   }
 }
 </script>

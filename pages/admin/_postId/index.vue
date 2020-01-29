@@ -1,6 +1,6 @@
 <template>
-  <div class="new-post-page">
-    <PostForm @submit="onSave" />
+  <div class="edit-post-page">
+    <PostForm :post="post" @submit="onSave" />
   </div>
 </template>
 
@@ -10,22 +10,30 @@ import api from '@/service/api'
 import PostForm from '@/components/Admin/PostForm'
 
 export default {
-  name: 'NewPost',
+  name: 'EditPost',
   layout: 'admin',
   components: {
     PostForm
   },
-  data() {
-    return {
+  validate({ params, query }) {
+    return /^.+$/.test(params.postId)
+  },
+  async asyncData({ params, error: onError }) {
+    try {
+      return {
+        post: await api.getPost(params.postId)
+      }
+    } catch (error) {
+      onError(error)
     }
   },
   methods: {
     ...mapActions({
-      createPost: 'createPost'
+      updatePost: 'updatePost'
     }),
     async onSave(submittedPost) {
       try {
-        await this.createPost(submittedPost)
+        await this.updatePost({ ...submittedPost, id: this.$route.params.postId })
         this.$router.push('/admin')
       } catch (error) {
         console.error(error)

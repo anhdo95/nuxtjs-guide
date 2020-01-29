@@ -4,6 +4,7 @@
       v-for="post in posts"
       :key="post.id"
       :post="post"
+      :isAdmin="isAdmin"
     />
   </div>
 </template>
@@ -16,7 +17,8 @@ export default {
     PostPreview
   },
   props: {
-    posts: Array
+    posts: Array,
+    isAdmin: Boolean
   }
 }
 </script>

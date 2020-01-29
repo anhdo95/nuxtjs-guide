@@ -1,7 +1,7 @@
 <template>
-  <nuxt-link :to="`/posts/${post.id}`" role="article" class="featured-post">
+  <nuxt-link :to="postLink" role="article" class="featured-post">
     <figure>
-      <img class="thumbnail" :src="post.thumbnailUrl" />
+      <img class="thumbnail" :src="post.thumbnail" />
       <figcaption>
         <h3>{{ post.title }}</h3>
         <p>{{ post.content }}</p>
@@ -17,7 +17,18 @@ export default {
     post: {
       type: Object,
       required: true
+    },
+    isAdmin: {
+      type: Boolean,
+      required: false
     }
+  },
+  computed: {
+    postLink() {
+      return this.isAdmin ? `/admin/${this.post.id}` : `/posts/${this.post.id}`
+    }
+  },
+  methods: {
   }
 }
 </script>

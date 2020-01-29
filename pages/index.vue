@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import PostList from '@/components/PostList'
 
 export default {
@@ -16,22 +17,15 @@ export default {
   },
   data() {
     return {
-      posts: [
-        {
-          id: 1,
-          title: "Post title 1",
-          thumbnailUrl: "https://previews.123rf.com/images/maxkabakov/maxkabakov1401/maxkabakov140101464/25153116-news-concept-pixelated-words-tech-news-on-digital-background-3d-render.jpg",
-          content: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
-        },
-        {
-          id: 2,
-          title: "Post title 2",
-          thumbnailUrl: "https://previews.123rf.com/images/maxkabakov/maxkabakov1401/maxkabakov140101464/25153116-news-concept-pixelated-words-tech-news-on-digital-background-3d-render.jpg",
-          content: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
-        }
-      ]
     }
-  }
+  },
+  computed: {
+    ...mapState({
+      posts: state => state.posts
+    })
+  },
+  mounted() {
+  },
 }
 </script>
 
