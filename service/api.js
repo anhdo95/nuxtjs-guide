@@ -23,11 +23,31 @@ export default ($axios) => ({
   },
   createPost(post) {
     post.updatedAt = new Date()
-    return $axios.post(`${process.env.baseUrl}/posts.json`, post)
-      .then(res => res.data.name)
+    return $axios.$post(`${process.env.baseUrl}/posts.json`, post)
+      .then(data => data.name)
   },
   updatePost(id, post) {
     post.updatedAt = new Date()
-    return $axios.put(`${process.env.baseUrl}/posts/${id}.json`, post)
+    return $axios.$put(`${process.env.baseUrl}/posts/${id}.json`, post)
+  },
+  signup(body) {
+    body.returnSecureToken = true
+
+    return $axios.post(
+      process.env.firebaseSignUpAPI,
+      body
+    ).then(data => {
+      console.log('data', data)
+    })
+  },
+  login(body) {
+    body.returnSecureToken = true
+
+    return $axios.post(
+      process.env.firebaseSignInAPI,
+      body
+    ).then(data => {
+      console.log('data', data)
+    })
   }
 })

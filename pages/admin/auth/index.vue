@@ -1,38 +1,51 @@
 <template>
-  <form @submit.prevent="onSave">
-    <AppControlInput v-model="user.email">E-mail address</AppControlInput>
+  <form @submit.prevent="onSubmit">
+    <AppControlInput v-model.trim="user.email">E-mail address</AppControlInput>
     <AppControlInput v-model="user.password" type="password">Password</AppControlInput>
 
-    <AppButton @click="isLoggedIn = !isLoggedIn">{{ !isLoggedIn ? 'Sign up' : 'Login' }}</AppButton>
-    <AppButton btnStyle="inverted" @click="onCancel">Switch to {{ isLoggedIn ? 'Sign up' : 'Login' }}</AppButton>
+    <AppButton>{{ !isLogin ? 'Sign up' : 'Login' }}</AppButton>
+    <AppButton
+      type="button"
+      btnStyle="inverted"
+      @click="isLogin = !isLogin"
+    >
+      Switch to {{ isLogin ? 'Login': 'Sign up' }}
+    </AppButton>
   </form>
 </template>
 
 <script>
 export default {
-  name: 'Auth',
-  layout: 'admin',
+  name: "Auth",
+  layout: "admin",
   data() {
     return {
       user: {
-        email: '',
-        password: ''
+        email: "",
+        password: ""
       },
-      isLoggedIn: false
-    }
+      isLogin: true
+    };
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
-    onSave() {
-      this.$emit('submit', this.post)
+    onSubmit() {
+      try {
+        if (this.isLogin) {
+          return void this.$api.login(this.user)
+        }
+
+        this.$api.signup(this.user);
+      } catch (error) {
+        console.error(error);
+      }
     },
 
-    onCancel() {
-      this.$router.push('/admin')
+    switchTo() {
+      this.isLogin = !this.isLogin;
     }
   }
-}
+};
 </script>
 
 <style scoped>

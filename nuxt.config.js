@@ -66,7 +66,10 @@ export default {
     }
   },
   env: {
-    baseUrl: process.env.BASE_URL
+    baseUrl: process.env.BASE_URL,
+    firebaseAPIKey: process.env.FIREBASE_API_KEY,
+    firebaseSignInAPI: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.FIREBASE_API_KEY}`,
+    firebaseSignUpAPI: `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.FIREBASE_API_KEY}`,
   },
   router: {
     // extendRoutes(routes, resolve) {
@@ -80,5 +83,8 @@ export default {
   transition: {
     name: 'fade',
     mode: 'out-in',
+  },
+  router: {
+    middleware: 'log'
   }
 }
