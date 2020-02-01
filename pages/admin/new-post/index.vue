@@ -6,15 +6,10 @@
 
 <script>
 import { mapActions } from 'vuex'
-import api from '@/service/api'
-import PostForm from '@/components/Admin/PostForm'
 
 export default {
   name: 'NewPost',
   layout: 'admin',
-  components: {
-    PostForm
-  },
   data() {
     return {
     }

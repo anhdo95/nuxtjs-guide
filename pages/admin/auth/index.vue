@@ -9,16 +9,9 @@
 </template>
 
 <script>
-import AppButton from '@/components/UI/AppButton'
-import AppControlInput from '@/components/UI/AppControlInput'
-
 export default {
   name: 'Auth',
   layout: 'admin',
-  components: {
-    AppButton,
-    AppControlInput
-  },
   data() {
     return {
       user: {

@@ -6,22 +6,17 @@
 
 <script>
 import { mapActions } from 'vuex'
-import api from '@/service/api'
-import PostForm from '@/components/Admin/PostForm'
 
 export default {
   name: 'EditPost',
   layout: 'admin',
-  components: {
-    PostForm
-  },
   validate({ params, query }) {
     return /^.+$/.test(params.postId)
   },
-  async asyncData({ params, error: onError }) {
+  async asyncData({ app, params, error: onError }) {
     try {
       return {
-        post: await api.getPost(params.postId)
+        post: await app.$api.getPost(params.postId)
       }
     } catch (error) {
       onError(error)

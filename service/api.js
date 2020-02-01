@@ -1,23 +1,21 @@
-import axios from 'axios'
-
-export default {
+export default ($axios) => ({
   getPosts() {
-    return axios.get('https://nuxt-backend-ad7fc.firebaseio.com/posts.json')
-      .then(res => {
-        return Object.keys(res.data).map(key => ({
-          ...res.data[key],
+    return $axios.$get(`/posts.json`)
+      .then(data => {
+        return Object.keys(data).map(key => ({
+          ...data[key],
           id: key,
         }))
       })
   },
   getPost(id) {
-    return axios.get(`https://nuxt-backend-ad7fc.firebaseio.com/posts/${id}.json`)
-      .then(res => {
-        if (!res.data) {
+    return $axios.$get(`${process.env.baseUrl}/posts/${id}.json`)
+      .then(data => {
+        if (!data) {
           throw new Error('The post is not found!')
         }
 
-        return res.data
+        return data
       })
       .catch(error => {
         throw new Error(error)
@@ -25,11 +23,11 @@ export default {
   },
   createPost(post) {
     post.updatedAt = new Date()
-    return axios.post('https://nuxt-backend-ad7fc.firebaseio.com/posts.json', post)
+    return $axios.post(`${process.env.baseUrl}/posts.json`, post)
       .then(res => res.data.name)
   },
   updatePost(id, post) {
     post.updatedAt = new Date()
-    return axios.put(`https://nuxt-backend-ad7fc.firebaseio.com/posts/${id}.json`, post)
+    return $axios.put(`${process.env.baseUrl}/posts/${id}.json`, post)
   }
-}
+})

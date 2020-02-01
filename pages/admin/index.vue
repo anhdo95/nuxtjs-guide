@@ -13,13 +13,9 @@
 
 <script>
 import { mapState } from 'vuex'
-import PostList from '@/components/PostList'
 
 export default {
   layout: 'admin',
-  components: {
-    PostList
-  },
   computed: {
     ...mapState({
       posts: state => state.posts

@@ -13,16 +13,14 @@
 </template>
 
 <script>
-import api from '@/service/api'
-
 export default {
   validate({ params, query }) {
     return /^.+$/.test(params.id)
   },
-  async asyncData({ params, error: onError }) {
+  async asyncData({ app, params, error: onError }) {
     try {
       return {
-        post: await api.getPost(params.id)
+        post: await app.$api.getPost(params.id)
       }
     } catch (error) {
       onError(error)

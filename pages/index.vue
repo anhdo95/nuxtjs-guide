@@ -9,12 +9,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import PostList from '@/components/PostList'
 
 export default {
-  components: {
-    PostList
-  },
   data() {
     return {
     }

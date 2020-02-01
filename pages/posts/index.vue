@@ -6,12 +6,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import PostList from '@/components/PostList'
 
 export default {
-  components: {
-    PostList
-  },
   data() {
     return {
     }
@@ -21,5 +17,11 @@ export default {
       posts: state => state.posts
     })
   },
+  head: {
+    title: 'The latest posts',
+    meta: [
+      { hid: "description", name: "description", content: "Trending, tech news on the world!" }
+    ]
+  }
 }
 </script>
