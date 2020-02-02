@@ -1,26 +1,33 @@
 <template>
   <div>
-    <main class="main">
-      <nuxt-link to="/">Back home</nuxt-link>
-      <nuxt/>
-    </main>
+    <TheHeader @sidenavToggle="displaySidenav = !displaySidenav" />
+    <TheSidenav
+      :show="displaySidenav"
+      @close="displaySidenav = false"
+    />
+    <main class="main"><nuxt /></main>
   </div>
 </template>
 
 <script>
+import TheHeader from '@/components/TheHeader'
+import TheSidenav from '@/components/TheSidenav'
+
 export default {
-  middleware: 'auth',
   components: {
+    TheSidenav,
+    TheHeader
   },
   data() {
     return {
+      displaySidenav: false
     }
   }
 }
 </script>
 
-<style>
-.main {
-  padding: 2rem;
-}
+<style scoped>
+  .main {
+    padding: 2rem;
+  }
 </style>

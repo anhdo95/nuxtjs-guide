@@ -8,7 +8,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     posts: [],
-    token: null
+    token: null,
+    tokenTimeoutId: null
   },
   getters: {
     isAuthenticated(state) {
@@ -18,6 +19,9 @@ const store = new Vuex.Store({
   mutations: {
     SET_TOKEN(state, token) {
       state.token = token
+    },
+    SET_TOKEN_TIMEOUT_ID(state, timeoutId) {
+      state.tokenTimeoutId = timeoutId
     },
     CLEAR_TOKEN(state) {
       state.token = null
@@ -37,6 +41,7 @@ const store = new Vuex.Store({
   actions: {
     nuxtServerInit(vuexContext, context) {
       context.store.dispatch('checkAuthentication', context.req.headers.cookie)
+
       return context.store.dispatch('fetchPosts')
     },
     async signup({ dispatch }, user) {
@@ -46,6 +51,14 @@ const store = new Vuex.Store({
     async login({ dispatch }, user) {
       const data = await this.$api.login(user)
       dispatch('handleAuthentication', data)
+    },
+    async logout({ commit, state }) {
+      commit('CLEAR_TOKEN')
+      Cookie.remove('token')
+      Cookie.remove('expirationDate')
+
+      commit('SET_TOKEN_TIMEOUT_ID', null)
+      clearTimeout(state.tokenTimeoutId)
     },
     handleAuthentication({ dispatch }, data) {
       const expirationDate = Date.now() + (Number(data.expiresIn) * 1000)
@@ -67,11 +80,12 @@ const store = new Vuex.Store({
 
       if (!jwt.token) return
 
-      setTimeout(() => {
+      const tokenTimeoutId = setTimeout(() => {
         commit('CLEAR_TOKEN')
       }, jwt.expirationDate - Date.now())
 
       commit('SET_TOKEN', jwt.token)
+      commit('SET_TOKEN_TIMEOUT_ID', tokenTimeoutId)
     },
     async fetchPosts({ commit }) {
       const posts = await this.$api.getPosts()
