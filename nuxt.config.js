@@ -1,7 +1,5 @@
 require('dotenv').config()
 
-console.log('process.env.BASE_URL', process.env.BASE_URL)
-
 export default {
   mode: 'universal',
   /*
@@ -84,7 +82,4 @@ export default {
     name: 'fade',
     mode: 'out-in',
   },
-  router: {
-    middleware: 'log'
-  }
 }

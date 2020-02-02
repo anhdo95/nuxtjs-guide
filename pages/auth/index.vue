@@ -15,9 +15,11 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
   name: "Auth",
-  layout: "admin",
+  layout: "auth",
   data() {
     return {
       user: {
@@ -27,23 +29,26 @@ export default {
       isLogin: true
     };
   },
-  mounted() {},
+  computed: {
+    token: state => state.token
+  },
   methods: {
-    onSubmit() {
+    ...mapActions({
+      signup: 'signup',
+      login: 'login',
+    }),
+    async onSubmit() {
       try {
-        if (this.isLogin) {
-          return void this.$api.login(this.user)
-        }
+        const api = this.isLogin ? this.login : this.signup;
 
-        this.$api.signup(this.user);
+        await api(this.user)
+
+        this.$router.push('/admin')
+
       } catch (error) {
         console.error(error);
       }
     },
-
-    switchTo() {
-      this.isLogin = !this.isLogin;
-    }
   }
 };
 </script>

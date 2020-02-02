@@ -9,7 +9,6 @@
 
 <script>
 export default {
-  middleware: 'auth',
   components: {
   },
   data() {
